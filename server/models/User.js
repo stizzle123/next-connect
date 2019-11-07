@@ -51,4 +51,4 @@ userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
 /* The MongoDBErrorHandler plugin gives us a better 'unique' error, rather than: "11000 duplicate key" */
 userSchema.plugin(mongodbErrorHandler);
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = User = mongoose.model("User", userSchema);

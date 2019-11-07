@@ -43,4 +43,4 @@ postSchema
 /* Create index on keys for more performant querying/post sorting */
 postSchema.index({ postedBy: 1, createdAt: 1 });
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = Post = mongoose.model("Post", postSchema);
