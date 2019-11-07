@@ -64,6 +64,7 @@ class MyDocument extends Document {
             sizes="16x16"
             href="/static/favicon-16x16.png"
           />
+          <link rel="manifest" href="/static/manifest.json" />
           <meta charSet="utf-8" />
           {/* Use minimum-scale=1 to enable GPU rasterization */}
           <meta
