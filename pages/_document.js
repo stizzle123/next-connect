@@ -55,14 +55,14 @@ class MyDocument extends Document {
           <link
             rel="icon"
             type="image/png"
-            sizes="32x32"
-            href="/static/favicon-32x32.png"
+            sizes="142x142"
+            href="/static/favicon-142x142.png"
           />
           <link
             rel="icon"
             type="image/png"
-            sizes="16x16"
-            href="/static/favicon-16x16.png"
+            sizes="152x152"
+            href="/static/favicon-152x152.png"
           />
           <link rel="manifest" href="/static/manifest.json" />
           <meta charSet="utf-8" />
