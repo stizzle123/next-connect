@@ -1,4 +1,5 @@
 const User = require("../models/User.js");
+const passport = require("passport");
 
 exports.validateSignup = (req, res, next) => {
   req.sanitizeBody("name");
@@ -29,7 +30,7 @@ exports.validateSignup = (req, res, next) => {
   next();
 };
 
-exports.signup = async (req, res, next) => {
+exports.signup = async (req, res) => {
   const { name, email, password } = req.body;
   const user = await new User({ name, email, password });
 
@@ -37,12 +38,37 @@ exports.signup = async (req, res, next) => {
     if (err) {
       return res.status(500).send(err.message);
     }
-    res.status(200).json(user);
+    res.status(200).json(user.name);
   });
 };
 
-exports.signin = () => {};
+exports.signin = (req, res, next) => {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return res.status(500).json(err.message);
+    }
+    if (!user) {
+      return res.status(400).json(info.message);
+    }
+    req.logIn(user, err => {
+      if (err) {
+        return res.status(500).json(err.message);
+      }
 
-exports.signout = () => {};
+      res.status(200).json(user);
+    });
+  })(req, res, next);
+};
 
-exports.checkAuth = () => {};
+exports.signout = (req, res) => {
+  res.clearCookie("next-connect.sid");
+  req.logout();
+  res.json({ message: "You are now signed out" });
+};
+
+exports.checkAuth = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/signin");
+};

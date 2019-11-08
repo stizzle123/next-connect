@@ -26,14 +26,12 @@ const handle = app.getRequestHandler();
 const mongooseOptions = {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useUnifiedTopology: true
 };
 
 mongoose
-  .connect(
-    process.env.MONGO_URI,
-    mongooseOptions
-  )
+  .connect(process.env.MONGO_URI, mongooseOptions)
   .then(() => console.log("DB connected"));
 
 mongoose.connection.on("error", err => {
