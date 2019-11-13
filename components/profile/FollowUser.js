@@ -1,10 +1,15 @@
 import Button from "@material-ui/core/Button";
+import { followUser, unfollowUser } from "../../lib/api";
 
-const FollowUser = ({ isFollowing }) => {
-  const request = isFollowing ? "unfollowUser" : "followUser";
+const FollowUser = ({ isFollowing, toggleFollow }) => {
+  const request = isFollowing ? unfollowUser : followUser;
   return (
-    <Button variant="contained" color="primary">
-      Follow
+    <Button
+      variant="contained"
+      color={isFollowing ? "secondary" : "primary"}
+      onClick={() => toggleFollow(request)}
+    >
+      {isFollowing ? "UnFollow" : "Follow"}
     </Button>
   );
 };

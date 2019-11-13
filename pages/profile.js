@@ -15,6 +15,7 @@ import Link from "next/link";
 import { authInitialProps } from "../lib/auth";
 import { getUser } from "../lib/api";
 import FollowUser from "../components/profile/FollowUser";
+import DeleteUser from "../components/profile/DeleteUser";
 
 class Profile extends React.Component {
   state = {
@@ -38,6 +39,15 @@ class Profile extends React.Component {
     return (
       user.followers.findIndex(follower => follower._id === auth.user._id) > -1
     );
+  };
+
+  toggleFollow = sendRequest => {
+    const { auth, userId } = this.props;
+    const { isFollowing } = this.state;
+
+    sendRequest(userId).then(() => {
+      this.setState({ isFollowing: !isFollowing });
+    });
   };
 
   render() {
@@ -79,9 +89,14 @@ class Profile extends React.Component {
                       </IconButton>
                     </a>
                   </Link>
+
+                  <DeleteUser user={user} />
                 </ListItemSecondaryAction>
               ) : (
-                <FollowUser isFollowing={isFollowing} />
+                <FollowUser
+                  isFollowing={isFollowing}
+                  toggleFollow={this.toggleFollow}
+                />
               )}
             </ListItem>
             <Divider />
