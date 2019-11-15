@@ -14,6 +14,7 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Link from "next/link";
 import Comments from "./Comments";
+import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
 
 class Post extends React.PureComponent {
   state = {
@@ -31,10 +32,7 @@ class Post extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    console.log({ prevProps }, { props: this.props });
-
     if (prevProps.post.likes.length !== this.props.post.likes.length) {
-      console.log("UPDATING", { prevProps }, { props: this.props });
       this.setState({
         isLiked: this.checkLiked(this.props.post.likes),
         numLikes: this.props.post.likes.length
@@ -49,6 +47,9 @@ class Post extends React.PureComponent {
   }
 
   checkLiked = likes => likes.includes(this.props.auth.user._id);
+
+  formatTimeCreated = time =>
+    distanceInWordsToNow(time, { includeSeconds: true, addSuffix: true });
 
   render() {
     const {
@@ -83,7 +84,7 @@ class Post extends React.PureComponent {
               <a>{post.postedBy.name}</a>
             </Link>
           }
-          subheader={post.createdAt}
+          subheader={this.formatTimeCreated(post.createdAt)}
           className={classes.cardHeader}
         />
 
